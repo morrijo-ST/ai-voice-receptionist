@@ -1,8 +1,6 @@
 
 import html
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 import streamlit as st
 
 def shell(name, title, subtitle, style):
@@ -20,7 +18,6 @@ def shell(name, title, subtitle, style):
     }
     BG,PANEL,INK,ACCENT,MUTED,RADIUS=themes[style]
     PALETTE=[ACCENT,'#4c9fd6','#d99455','#ae83c6','#6cae8b']
-    px.defaults.color_discrete_sequence=PALETTE
     st.markdown(f"""<style>
     .stApp {{background:{BG};color:{INK}}}
     [data-testid="stHeader"] {{background:{BG};}}
@@ -52,16 +49,6 @@ def shell(name, title, subtitle, style):
     st.markdown(f'<div class="hero"><div class="eyebrow">MORRIS / {html.escape(name.upper())} · SYNTHETIC DEMO</div><h1>{html.escape(title)}</h1><p>{html.escape(subtitle)}</p></div>',unsafe_allow_html=True)
     st.sidebar.caption('MORRIS · PORTFOLIO LAB')
     st.sidebar.caption('Fictional data. Explore the workflow; no external systems are connected.')
-
-def chart(fig, height=340):
-    for axis in [fig.layout.xaxis,fig.layout.yaxis]:
-        if axis.title.text:axis.title.text=axis.title.text.replace('_',' ').title()
-    for trace in fig.data:
-        if trace.name:trace.name=trace.name.replace('_',' ').title()
-    fig.update_layout(template='plotly_white',paper_bgcolor=PANEL,plot_bgcolor=PANEL,font=dict(color=INK,size=12),colorway=PALETTE,height=height,margin=dict(l=55,r=25,t=55,b=55),legend=dict(orientation='h',y=-.24,x=0),hoverlabel=dict(bgcolor=PANEL,font_color=INK))
-    fig.update_xaxes(automargin=True,gridcolor='rgba(128,145,155,.14)',zerolinecolor='rgba(128,145,155,.3)')
-    fig.update_yaxes(automargin=True,gridcolor='rgba(128,145,155,.14)',zerolinecolor='rgba(128,145,155,.3)')
-    st.plotly_chart(fig,use_container_width=True,theme=None)
 
 def brief(text):
     st.markdown('<div class="brief">'+html.escape(text)+'</div>',unsafe_allow_html=True)
